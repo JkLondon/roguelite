@@ -11,21 +11,25 @@ class Mob:
         self.armor = None
         self.attack = None
 
-    def move_m(self):
-        ph.move(self)
-        pass
-
     def say_m(self):
         d.say(self, id)
         pass
 
-    def destruction_m(self):
-        ph.destruction(self)
+    def collision(self, obj2):
+        """
+        Изначально планирую интерпретировать мобов как
+        прямоугольники, пока прогай от этого
+        """
         pass
 
-    def attacking(self):
+    def move(self):
+        """Движение моба, 2 спрайта на движение будет"""
         pass
 
-    def collision_m(self, obj):
-        ph.collision(self, obj)
+    def destruction(self):
+        """Разрушение моба, сюда нужна будет анимация"""
+        pass
+
+    def targeting(self):
+        """Наведение пушек, мечей как в той игре)"""
         pass
