@@ -2,7 +2,7 @@
 import pygame as pg
 import Background as bg
 
-'''здесь костыль, потому что фона нет, константы убрать!'''
+
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
@@ -13,7 +13,7 @@ def event_processor(event):
     pass
 
 class Game:
-    """В этом классе вся оболочка игры"""
+    """Shell of game"""
     def __init__(self):
         self.WIDTH = 1200
         self.HEIGHT = 600
@@ -25,30 +25,31 @@ class Game:
         self.clock = pg.time.Clock()
         self.time = 0
         
+        self.list_of_objects = []
+        
 
     def new_game(self):
-        """Запуск игры"""
+        """start new game"""
+        running = True
+        
+        self.all_sprites = pg.sprite.Group()
         
         self.start_func()
-        
-        running = True
+        for sp in self.list_of_objects:
+            self.all_sprites.add(sp)
         while running:
-            # Держим цикл на правильной скорости
             self.clock.tick(self.FPS)
-            # Ввод процесса (события)
+            
             for event in pg.event.get():
                 # check for closing window
                 if event.type == pg.QUIT:
                     running = False
                 event_processor(event)
             
-            # Обновление
-            
             self.body_func()
             
-            # Рендеринг Background features
             self.rendr()
-            # После отрисовки всего, переворачиваем экран
+            
             pg.display.flip()
             self.time += 1
 
@@ -57,27 +58,58 @@ class Game:
     
     @staticmethod
     def start_func():
+        """
+        Function which must be run before main cycle starts.
+        """
         pass
     
-    def change_start(self,func):
+    def set_start(self,func):
+        """
+        Set start function
+        """
         self.start_func = func
     
     @staticmethod
     def body_func():
+        """
+        Function which must be run in main cycle.
+        """
         pass
     
-    def change_body(self,func):
+    def set_body(self,func):
+        """
+        Set body function.
+        """
         self.start_func = func
     
+    def add_obj(self,obj):
+        """
+        Add new object in list of active objects.
+        """
+        self.list_of_objects.append(obj)
+    
+    def clear_list(self):
+        """
+        Clear list of active objects.
+        """
+        self.list_of_objects = []
+    
     def rendr(self):
+        """
+        Update sprites under display.
+        """
+        self.all_sprites.update(self.time)
         self.screen.fill(BLACK)
+        self.all_sprites.draw(self.screen)
+        
+        
 
+if __name__ == '__main__':
+    BoD = Game()
 
-BoD = Game()
+    def f():
+        print('***',end='')
 
-def f():
-    print('***',end='')
+    BoD.set_start(f)
 
-BoD.change_start(f)
-
-BoD.new_game()
+    BoD.new_game()
