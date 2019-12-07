@@ -1,35 +1,37 @@
-import animations as a
-import physics as ph
-import dialogs as d
+import Animation as am
+import dialogs
 
 
 class Mob:
-    def __init__(self):
+    def __init__(self,x,y):
         self.size = None
-        self.spite = None
+        self.state = None
         self.health = None
         self.armor = None
         self.attack = None
+        self.x_pos = x
+        self.y_pos = y
+        self.x_vel = 0
+        self.y_vel = 0
 
     def say_m(self):
-        d.say(self, id)
-        pass
+        dialogs.say(self, id)
 
     def collision(self, obj2):
-        """
-        Изначально планирую интерпретировать мобов как
-        прямоугольники, пока прогай от этого
-        """
         pass
 
     def move(self):
-        """Движение моба, 2 спрайта на движение будет"""
+        """
+        Abstract method. It will be define in class Human
+        """
         pass
 
     def destruction(self):
         """Разрушение моба, сюда нужна будет анимация"""
         pass
 
-    def targeting(self):
-        """Наведение пушек, мечей как в той игре)"""
-        pass
+
+if __name__ == '__main__':
+    pass
+else:
+    print('Class Mob connected.')
