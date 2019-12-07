@@ -19,7 +19,11 @@ class Mob:
 
     def collision(self, obj2):
         pass
-
+    
+    def update(self):
+        self.x_pos += self.x_vel
+        self.y_pos += self.y_vel
+    
     def move(self):
         """
         Abstract method. It will be define in class Human
