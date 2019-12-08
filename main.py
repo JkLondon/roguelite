@@ -71,6 +71,7 @@ class Game:
             if event.key == pg.K_s:
                 player.state = 'bot'
                 player.bot_time = self.time
+
     @staticmethod
     def start_func():
         """
