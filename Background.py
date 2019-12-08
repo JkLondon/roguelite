@@ -7,37 +7,39 @@ landscape1 = []
 
 """Эта штука должна быть в main, но пока пусть побудет тут"""
 with open('landscape2.txt', 'r') as f:
-        for i in f:
-            l = i.split(' ')
-            if '\n' in l:
-                l.remove('\n')
-            landscape1.append(list(map(int, l)))
+    for i in f:
+        L = i.split(' ')
+        if '\n' in L:
+            L.remove('\n')
+        landscape1.append(list(map(int, L)))
 
 GROUNDCOLOR_1 = (6, 131+5, 158+5)
-GROUNDCOLOR_2 = WHITE
+GROUNDCOLOR_2 = (0, 0, 0)
+
 
 class Ground():
     def __init__(self, array, screen):
-    """
-    self.array - двумерный список из нулей и единиц;
-    точки с координатами (i*self.size, j*self.size) - левые верхние
-    углы квадратов
-    """
+        """
+        self.array - двумерный список из нулей и единиц;
+        точки с координатами (i*self.size, j*self.size) - левые верхние
+        углы квадратов
+        """
         self.array = array
         self.width = len(self.array[0])
         self.height = len(self.array)
         self.size = 20
-        self.color = getcolor()
+        self.color = get_color()
+        self.screen = screen
 
     def draw_ground(self):
         for i in range(self.height):
             for j in range(self.width):
                 if self.array[i][j] == 1:
-                    pygame.draw.rect(screen, self.color, (j*self.size, i*self.size,
+                    pygame.draw.rect(self.screen, self.color, (j*self.size, i*self.size,
                                                           self.size, self.size))
 
-
     def down_collision(self, other):
+
         x = other.rect.x
         y = other.rect.y
         b = False
@@ -74,7 +76,7 @@ class Ground():
         return b
 
 
-def getcolor():
+def get_color():
     return GROUNDCOLOR_2
 
 

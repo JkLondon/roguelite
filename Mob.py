@@ -4,7 +4,8 @@ import dialogs
 
 class Mob:
     def __init__(self, x, y):
-        self.size = None
+        self.size_y = None
+        self.size_x = None
         self.state = None
         self.health = None
         self.armor = None
@@ -23,8 +24,8 @@ class Mob:
     
     def update(self):
         self.x_pos += self.x_vel
-        self.y_pos = min(self.y_pos + self.y_vel, 600 - self.size)
-        if self.y_pos + self.size < 600:
+        self.y_pos = min(self.y_pos + self.y_vel, 600 - self.size_y)
+        if self.y_pos + self.size_y < 600:
             self.y_vel += 1  # da eto g
 
     def move(self):

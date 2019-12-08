@@ -1,9 +1,10 @@
 # coding=utf-8
 import pygame as pg
-import Background as bg
+import Background as Bg
 import lib_sprites
-import Mob as Mb
+import Player as Pl
 import Animation as A
+import Creature as C
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -36,20 +37,15 @@ class Game:
             self.all_sprites.add(self.dict_of_objects[sp])
         while running:
             self.clock.tick(self.FPS)
-            
             for event in pg.event.get():
                 # check for closing window
                 if event.type == pg.QUIT:
                     running = False
                 self.event_processor(event, self.dict_of_objects['player'].mob)
-                
-                if self.time - self.dict_of_objects['player'].mob.bot_time >= 90 and \
-                        self.dict_of_objects['player'].mob.state == 'bot':
-                    self.dict_of_objects['player'].mob.state = None
-
+            self.dict_of_objects['creature'].mob.behavior(self.dict_of_objects['player'].mob)
             self.body_func()
 
-            self.rendr()
+            self.render()
             
             pg.display.flip()
             self.time += 1
@@ -87,13 +83,14 @@ class Game:
         Set start function
         """
         self.start_func = func
-    
-    @staticmethod
-    def body_func():
+
+    def body_func(self):
         """
         Function which must be run in main cycle.
         """
-        pass
+        if self.time - self.dict_of_objects['player'].mob.bot_time >= 90 and \
+                self.dict_of_objects['player'].mob.state == 'bot':
+            self.dict_of_objects['player'].mob.state = None
     
     def set_body(self, func):
         """
@@ -115,7 +112,7 @@ class Game:
         self.dict_of_objects = dict()
         self.list_of_keys = []
     
-    def rendr(self):
+    def render(self):
         """
         Update sprites under display.
         """
@@ -129,11 +126,13 @@ if __name__ == '__main__':
 
 
     def f():
-        test_mob = Mb.Mob(400, 400)
+        test_mob = Pl.Player(400, 400)
         test_mob.x_vel = 0
         test_mob_animation = A.Animation(test_mob, lib_sprites.TEST_MOB)
         BoD.add_obj(test_mob_animation, 'player')
-
+        test_creature = C.Creature(600, 400)
+        test_creature_animation = A.Animation(test_creature, lib_sprites.TEST_MOB)
+        BoD.add_obj(test_creature_animation, 'creature')
 
     BoD.set_start(f)
     BoD.new_game()

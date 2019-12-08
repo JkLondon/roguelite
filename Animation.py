@@ -11,13 +11,14 @@ class Animation(pygame.sprite.Sprite):
         self.set_image(0)
         self.mob = mob
         self.rect.center = (self.mob.x_pos, self.mob.y_pos)
-        self.mob.size = abs(self.rect.bottom - self.rect.center[1])
-    
+        self.mob.size_x = abs(self.rect.left - self.rect.center[0])
+        self.mob.size_y = abs(self.rect.bottom - self.rect.center[1])
+
     def change_sprite(self, sprite_name, time):
         self.sprite = self.dict_of_sprites[sprite_name]
         self.set_image(time)
-    
-    def set_image(self,time):
+
+    def set_image(self, time):
         """
         Set image of sprite.
         """
