@@ -132,7 +132,7 @@ if __name__ == '__main__':
         test_mob_animation = A.Animation(test_mob, lib_sprites.TEST_MOB)
         BoD.add_obj(test_mob_animation, 'player')
         test_creature = C.Creature(600, 400)
-        test_creature_animation = A.Animation(test_creature, lib_sprites.TEST_MOB)
+        test_creature_animation = A.Animation(test_creature, lib_sprites.TEST_CREATURE)
         BoD.add_obj(test_creature_animation, 'creature')
 
     BoD.set_start(f)
