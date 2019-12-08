@@ -3,7 +3,7 @@ import dialogs
 
 
 class Mob:
-    def __init__(self,x,y):
+    def __init__(self, x, y):
         self.size = None
         self.state = None
         self.health = None
@@ -13,6 +13,7 @@ class Mob:
         self.y_pos = y
         self.x_vel = 0
         self.y_vel = 0
+        self.bot_time = 0
 
     def say_m(self):
         dialogs.say(self, id)
@@ -22,8 +23,10 @@ class Mob:
     
     def update(self):
         self.x_pos += self.x_vel
-        self.y_pos += self.y_vel
-    
+        self.y_pos = min(self.y_pos + self.y_vel, 600 - self.size)
+        if self.y_pos + self.size < 600:
+            self.y_vel += 1  # da eto g
+
     def move(self):
         """
         Abstract method. It will be define in class Human

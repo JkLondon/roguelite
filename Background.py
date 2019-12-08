@@ -1,6 +1,3 @@
-import physics as ph
-
-
 class BackGround:
     def __init__(self):
         """
