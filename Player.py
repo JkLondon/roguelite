@@ -1,7 +1,7 @@
-import Mob as M
+import Human as H
 
 
-class Player(M.Mob):
+class Player(H.Human):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.lvl = 1
