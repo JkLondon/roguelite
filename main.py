@@ -28,6 +28,17 @@ class Game:
         self.dict_of_objects = dict()
         self.list_of_keys = []
         self.all_sprites = pg.sprite.Group()
+        '''label shit'''
+        self.screen_rect = self.screen.get_rect()
+        self.default_font = pg.font.get_default_font()
+        self.font_renderer = pg.font.Font(self.default_font, 24)
+        '''hp shit'''
+        self.hp = None
+        self.hp_rect = None
+        '''u_lose shit'''
+        self.alive = True
+        self.lose = None
+        self.lose_rect = None
 
     def new_game(self):
         """start new game"""
@@ -57,6 +68,11 @@ class Game:
         event_processor
         don't react on any keys when bot.
         """
+        if not self.alive:
+            if event.type == pg.KEYDOWN:
+                self.clear_list()
+                self.all_sprites = pg.sprite.Group()
+                self.new_game()
         if player.state == 'bot':
             return
         if pg.key.get_pressed()[pg.K_a]:
@@ -85,6 +101,23 @@ class Game:
         """
         self.start_func = func
 
+    def set_hp(self):
+        """
+        Function will show your current hp
+        """
+        self.hp = self.font_renderer.render(str(max(0, self.dict_of_objects[
+                                                    'player'].mob.health)) + ' HP', True, WHITE)
+        self.hp_rect = self.hp.get_rect()
+        # left on screen
+        self.hp_rect.left = self.screen_rect.left
+
+    def set_lose(self):
+        self.lose = self.font_renderer.render("Вы проиграли, для продолжения нажмите любую клавишу", True, WHITE)
+        self.lose_rect = self.lose.get_rect()
+        # left on screen
+        self.lose_rect.center = self.screen_rect.center
+        self.alive = False
+
     def body_func(self):
         """
         Function which must be run in main cycle.
@@ -92,7 +125,10 @@ class Game:
         if self.time - self.dict_of_objects['player'].mob.bot_time >= 90 and \
                 self.dict_of_objects['player'].mob.state == 'bot':
             self.dict_of_objects['player'].mob.state = None
-    
+        self.set_hp()
+        if self.dict_of_objects['player'].mob.health <= 0:
+            self.set_lose()
+
     def set_body(self, func):
         """
         Set body function.
@@ -117,10 +153,14 @@ class Game:
         """
         Update sprites under display.
         """
-        self.all_sprites.update(self.time)
+        if self.alive:
+            self.all_sprites.update(self.time)
         self.screen.fill(BLACK)
+        if not self.alive:
+            self.screen.blit(self.lose, self.lose_rect)
+        self.screen.blit(self.hp, self.hp_rect)
         self.all_sprites.draw(self.screen)
-        
+
 
 if __name__ == '__main__':
     BoD = Game()
@@ -134,6 +174,7 @@ if __name__ == '__main__':
         test_creature = C.Creature(600, 400)
         test_creature_animation = A.Animation(test_creature, lib_sprites.TEST_CREATURE)
         BoD.add_obj(test_creature_animation, 'creature')
+        BoD.alive = True
 
     BoD.set_start(f)
     BoD.new_game()
