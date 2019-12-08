@@ -23,7 +23,6 @@ class Animation(pygame.sprite.Sprite):
         Set image of sprite.
         """
         num = (time // self.sprite['timer']) % self.sprite['num']
-        print(num)
         self.image = pygame.image.load(self.sprite['sprite'][num]).convert()
         self.image.set_colorkey((169, 144, 121))
         self.rect = self.image.get_rect()

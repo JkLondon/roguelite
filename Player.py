@@ -7,3 +7,6 @@ class Player(M.Mob):
         self.lvl = 1
         self.weapon_type = None
         self.health = 20
+
+    def attack(self):
+        pass
