@@ -42,7 +42,7 @@ class Game:
                 if event.type == pg.QUIT:
                     running = False
                 self.event_processor(event, self.dict_of_objects['player'].mob)
-                print(self.time, self.dict_of_objects['player'].mob.bot_time)
+                
                 if self.time - self.dict_of_objects['player'].mob.bot_time >= 90 and \
                         self.dict_of_objects['player'].mob.state == 'bot':
                     self.dict_of_objects['player'].mob.state = None
