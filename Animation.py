@@ -13,6 +13,7 @@ class Animation(pygame.sprite.Sprite):
         self.rect.center = (self.mob.x_pos, self.mob.y_pos)
         self.mob.size_x = abs(self.rect.left - self.rect.center[0])
         self.mob.size_y = abs(self.rect.bottom - self.rect.center[1])
+        self.mob.animation = self
 
     def change_sprite(self, sprite_name, time):
         self.sprite = self.dict_of_sprites[sprite_name]
@@ -32,7 +33,7 @@ class Animation(pygame.sprite.Sprite):
         Update position of picture on display.
         """
         self.mob.update()
-        self.set_image(time)
+        self.mob.sprite_update(time)
         self.rect.center = (self.mob.x_pos, self.mob.y_pos)
 
 
