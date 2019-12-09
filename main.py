@@ -154,7 +154,7 @@ class Game:
         """
         Func declared where score table is
         """
-        self.score_table = self.font_renderer.render(str(self.score), True, WHITE)
+        self.score_table = self.font_renderer.render('Текущий счет: ' + str(self.score), True, RED)
         self.score_table_rect = self.score_table.get_rect()
         # left on screen
         self.score_table_rect.right = self.screen_rect.right
@@ -163,7 +163,7 @@ class Game:
         """
         Func declared where record table is
         """
-        self.record_table = self.font_renderer.render(str(self.record), True, WHITE)
+        self.record_table = self.font_renderer.render('Рекорд: ' + str(self.record), True, RED)
         self.record_table_rect = self.record_table.get_rect()
         # left on screen
         self.record_table_rect.right = self.screen_rect.right
@@ -209,8 +209,8 @@ class Game:
         if not self.alive:
             self.screen.blit(self.lose, self.lose_rect)
         self.screen.blit(self.hp, self.hp_rect)
-        self.screen.blit(self.score_table, (750, 50))
-        self.screen.blit(self.record_table, (750, 100))
+        self.screen.blit(self.score_table, (570, 10))
+        self.screen.blit(self.record_table, (570, 60))
         self.all_sprites.draw(self.screen)
 
 
@@ -219,7 +219,7 @@ if __name__ == '__main__':
 
 
     def f():
-        test_mob = Pl.Player(400, 200, BoD.BackGr)
+        test_mob = Pl.Player(400, 400, BoD.BackGr)
         test_mob.x_vel = 0
         test_mob_animation = A.Animation(test_mob, lib_sprites.TEST_MOB)
         BoD.add_obj(test_mob_animation, 'player')
