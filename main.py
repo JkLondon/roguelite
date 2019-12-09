@@ -14,7 +14,7 @@ BLUE = (0, 0, 255)
 landscape1 = []
 
 """Эта штука должна быть в main, но пока пусть побудет тут"""
-with open('landscape2.txt', 'r') as f:
+with open('landscape1.txt', 'r') as f:
     for i in f:
         L = i.split(' ')
         if '\n' in L:
@@ -51,6 +51,7 @@ class Game:
         '''BackGrAdd'''
         self.BackGr = Bg.Ground(landscape1, self.screen)
         self.BGImage = pg.image.load('background_1.jpg').convert()
+        print(self.BackGr.array)
 
     def new_game(self):
         """start new game"""
@@ -180,11 +181,11 @@ if __name__ == '__main__':
 
 
     def f():
-        test_mob = Pl.Player(400, 400)
+        test_mob = Pl.Player(400, 400, BoD.BackGr)
         test_mob.x_vel = 0
         test_mob_animation = A.Animation(test_mob, lib_sprites.TEST_MOB)
         BoD.add_obj(test_mob_animation, 'player')
-        test_creature = C.Creature(600, 400)
+        test_creature = C.Creature(600, 400, BoD.BackGr)
         test_creature_animation = A.Animation(test_creature, lib_sprites.TEST_CREATURE)
         BoD.add_obj(test_creature_animation, 'creature')
         BoD.alive = True

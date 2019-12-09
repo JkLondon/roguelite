@@ -6,7 +6,7 @@ H = 600  # высота экрана
 landscape1 = []
 
 """Эта штука должна быть в main, но пока пусть побудет тут"""
-with open('landscape2.txt', 'r') as f:
+with open('landscape1.txt', 'r') as f:
     for i in f:
         L = i.split(' ')
         if '\n' in L:
@@ -40,38 +40,38 @@ class Ground():
 
     def down_collision(self, other):
 
-        x = other.rect.x
-        y = other.rect.y
+        x = other.x_pos - other.size_x
+        y = other.y_pos - other.size_y
         b = False
-        for i in range(x // self.size, (x + other.rect.width) // self.size + 1):
-            if self.array[(y + other.rect.height) // self.size][i] == 1:
+        for i in range(x // self.size, (x + other.width) // self.size + 1):
+            if self.array[(y + other.height) // self.size][i] == 1:
                 b = True
         return b
 
     def up_collision(self, other):
-        x = other.rect.x
-        y = other.rect.y
+        x = other.x_pos - other.size_x
+        y = other.y_pos - other.size_y
         b = False
-        for i in range(x // self.size, (x + other.rect.width) // self.size + 1):
+        for i in range(x // self.size, (x + other.width) // self.size + 1):
             if self.array[y // self.size][i] == 1:
                 b = True
         return b
     
     def left_collision(self, other):
-        x = other.rect.x
-        y = other.rect.y
+        x = other.x_pos - other.size_x
+        y = other.y_pos - other.size_y
         b = False
-        for i in range(y // self.size, (y + other.rect.height) // self.size + 1):
+        for i in range(y // self.size, (y + other.height) // self.size + 1):
             if self.array[i][x // self.size] == 1:
                 b = True
         return b
 
     def right_collision(self, other):
-        x = other.rect.x
-        y = other.rect.y
+        x = other.x_pos - other.size_x
+        y = other.y_pos - other.size_y
         b = False
-        for i in range(y // self.size, (y + other.rect.height) // self.size + 1):
-            if self.array[i][(x + other.rect.width) // self.size] == 1:
+        for i in range(y // self.size, (y + other.height) // self.size + 1):
+            if self.array[i][(x + other.width) // self.size] == 1:
                 b = True
         return b
 
