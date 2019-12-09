@@ -38,8 +38,7 @@ class Ground():
                     pygame.draw.rect(self.screen, self.color, (j*self.size, i*self.size,
                                                           self.size, self.size))
 
-    def down_collision(self, other):
-
+    def down_collision(self, other):a
         x = other.x_pos - other.size_x
         y = other.y_pos - other.size_y
         b = False

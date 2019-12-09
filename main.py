@@ -51,10 +51,11 @@ class Game:
         '''BackGrAdd'''
         self.BackGr = Bg.Ground(landscape1, self.screen)
         self.BGImage = pg.image.load('background_1.jpg').convert()
-        print(self.BackGr.array)
 
     def new_game(self):
-        """start new game"""
+        """
+        start new game
+        """
         running = True
         self.start_func()
         for sp in self.list_of_keys:
@@ -122,9 +123,12 @@ class Game:
                                                     'player'].mob.health)) + ' HP', True, WHITE)
         self.hp_rect = self.hp.get_rect()
         # left on screen
-        self.hp_rect.left = self.screen_rect.left
+        self.hp_rect.left = 30
 
     def set_lose(self):
+        """
+        Func declared where lose table is
+        """
         self.lose = self.font_renderer.render("Вы проиграли, для продолжения нажмите любую клавишу", True, WHITE)
         self.lose_rect = self.lose.get_rect()
         # left on screen
@@ -186,6 +190,7 @@ if __name__ == '__main__':
         test_mob_animation = A.Animation(test_mob, lib_sprites.TEST_MOB)
         BoD.add_obj(test_mob_animation, 'player')
         test_creature = C.Creature(600, 400, BoD.BackGr)
+        test_creature.health = 1
         test_creature_animation = A.Animation(test_creature, lib_sprites.TEST_CREATURE)
         BoD.add_obj(test_creature_animation, 'creature')
         BoD.alive = True

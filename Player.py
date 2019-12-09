@@ -11,4 +11,5 @@ class Player(H.Human):
 
     def attack(self, x):
         if self.x < x:
-            turn_right = None
+            pass
+
