@@ -7,6 +7,8 @@ class Player(H.Human):
         self.lvl = 1
         self.weapon_type = None
         self.health = 20
+        self.attacking = False
 
-    def attack(self):
-        pass
+    def attack(self, x):
+        if self.x < x:
+            turn_right = None

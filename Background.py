@@ -14,7 +14,7 @@ with open('landscape2.txt', 'r') as f:
         landscape1.append(list(map(int, L)))
 
 GROUNDCOLOR_1 = (6, 131+5, 158+5)
-GROUNDCOLOR_2 = (0, 0, 0)
+GROUNDCOLOR_2 = (255, 255, 255)
 
 
 class Ground():
@@ -53,7 +53,7 @@ class Ground():
         y = other.rect.y
         b = False
         for i in range(x // self.size, (x + other.rect.width) // self.size + 1):
-            if self.array[(y) // self.size][i] == 1:
+            if self.array[y // self.size][i] == 1:
                 b = True
         return b
     
@@ -62,7 +62,7 @@ class Ground():
         y = other.rect.y
         b = False
         for i in range(y // self.size, (y + other.rect.height) // self.size + 1):
-            if self.array[i][(x) // self.size] == 1:
+            if self.array[i][x // self.size] == 1:
                 b = True
         return b
 
@@ -80,3 +80,7 @@ def get_color():
     return GROUNDCOLOR_2
 
 
+if __name__ == '__main__':
+    pass
+else:
+    print('Class BackGround connected.')

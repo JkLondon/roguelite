@@ -11,12 +11,21 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
+landscape1 = []
+
+"""Эта штука должна быть в main, но пока пусть побудет тут"""
+with open('landscape2.txt', 'r') as f:
+    for i in f:
+        L = i.split(' ')
+        if '\n' in L:
+            L.remove('\n')
+        landscape1.append(list(map(int, L)))
 
 
 class Game:
     """Shell of game"""
     def __init__(self):
-        self.WIDTH = 1200
+        self.WIDTH = 800
         self.HEIGHT = 600
         self.FPS = 30
         pg.init()
@@ -39,6 +48,9 @@ class Game:
         self.alive = True
         self.lose = None
         self.lose_rect = None
+        '''BackGrAdd'''
+        self.BackGr = Bg.Ground(landscape1, self.screen)
+        self.BGImage = pg.image.load('background_1.jpg').convert()
 
     def new_game(self):
         """start new game"""
@@ -155,7 +167,8 @@ class Game:
         """
         if self.alive:
             self.all_sprites.update(self.time)
-        self.screen.fill(BLACK)
+        self.screen.blit(self.BGImage, (0, 0))
+        self.BackGr.draw_ground()
         if not self.alive:
             self.screen.blit(self.lose, self.lose_rect)
         self.screen.blit(self.hp, self.hp_rect)
