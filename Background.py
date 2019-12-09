@@ -13,7 +13,7 @@ with open('landscape1.txt', 'r') as f:
             L.remove('\n')
         landscape1.append(list(map(int, L)))
 
-GROUNDCOLOR_1 = (6, 131+5, 158+5)
+GROUNDCOLOR_1 = (6, 131 + 5, 158 + 5)
 GROUNDCOLOR_2 = (255, 255, 255)
 
 
@@ -35,12 +35,14 @@ class Ground():
         for i in range(self.height):
             for j in range(self.width):
                 if self.array[i][j] == 1:
-                    pygame.draw.rect(self.screen, self.color, (j*self.size, i*self.size,
-                                                          self.size, self.size))
+                    pygame.draw.rect(self.screen, self.color, (j * self.size, i * self.size,
+                                                               self.size, self.size))
 
-    def down_collision(self, other):a
+    def down_collision(self, other):
         x = other.x_pos - other.size_x
         y = other.y_pos - other.size_y
+        if other.health == 20:
+            pass
         b = False
         for i in range(x // self.size, (x + other.width) // self.size + 1):
             if self.array[(y + other.height) // self.size][i] == 1:
@@ -51,16 +53,16 @@ class Ground():
         x = other.x_pos - other.size_x
         y = other.y_pos - other.size_y
         b = False
-        for i in range(x // self.size, (x + other.width) // self.size + 1):
+        for i in range(x // self.size, (x + other.width) // self.size):
             if self.array[y // self.size][i] == 1:
                 b = True
         return b
-    
+
     def left_collision(self, other):
         x = other.x_pos - other.size_x
         y = other.y_pos - other.size_y
         b = False
-        for i in range(y // self.size, (y + other.height) // self.size + 1):
+        for i in range(y // self.size, (y + other.height) // self.size):
             if self.array[i][x // self.size] == 1:
                 b = True
         return b
@@ -69,7 +71,7 @@ class Ground():
         x = other.x_pos - other.size_x
         y = other.y_pos - other.size_y
         b = False
-        for i in range(y // self.size, (y + other.height) // self.size + 1):
+        for i in range(y // self.size, (y + other.height) // self.size):
             if self.array[i][(x + other.width) // self.size] == 1:
                 b = True
         return b

@@ -6,7 +6,6 @@ class Mob:
     def __init__(self, x, y, background):
         self.size_y = 0
         self.size_x = 0
-        self.state = None
         self.health = None
         self.armor = None
         self.attack = None
@@ -15,7 +14,6 @@ class Mob:
         self.y_pos = y
         self.x_vel = 0
         self.y_vel = 0
-        self.bot_time = 0
         '''bg const pack'''
         self.background = background
         self.x = self.x_pos - self.size_x
@@ -38,13 +36,13 @@ class Mob:
             self.x_pos -= self.x_vel
             if self.x_vel >= 0:
                 for i in range(self.x_vel):
-                    self.x_pos += i
+                    self.x_pos += 1
                     if self.background.right_collision(self):
                         self.x_pos -= 1
                         break
             else:
                 for i in range(abs(self.x_vel)):
-                    self.x_pos -= i
+                    self.x_pos -= 1
                     if self.background.left_collision(self):
                         self.x_pos += 1
                         break
@@ -53,18 +51,20 @@ class Mob:
             self.y_pos -= self.y_vel
             if self.y_vel >= 0:
                 for i in range(self.y_vel):
-                    self.y_pos += i
+                    self.y_pos += 1
                     if self.background.down_collision(self):
-                        self.y_pos -= 1
                         break
             else:
                 for i in range(abs(self.y_vel)):
-                    self.y_pos -= i
+                    self.y_pos -= 1
                     if self.background.up_collision(self):
-                        self.y_pos += 1
                         break
+        self.y_pos += 1
         if not self.background.down_collision(self):
             self.y_vel += 1  # da eto g
+        else:
+            self.y_vel = 0
+        self.y_pos -= 1
 
     def destruction(self):
         """Разрушение моба, сюда нужна будет анимация"""

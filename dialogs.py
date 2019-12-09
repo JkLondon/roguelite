@@ -1,4 +1,4 @@
-"""Здесь будет храниться сюжет игры (текст реплик)"""
+"""
 import pygame
 
 # --- constants --- (UPPER_CASE names)
@@ -75,3 +75,4 @@ pygame.quit()
 
 def say(obj, id):
     pass
+"""

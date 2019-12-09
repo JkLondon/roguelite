@@ -12,11 +12,16 @@ list_mob_go_right = []
 list_mob_go_right.append('test_mob_go_right(1).png')
 list_mob_go_right.append('test_mob_go_right(2).png')
 
+list_player_bot = []
+list_player_bot.append('test_mob_bot(1).png')
+list_player_bot.append('test_mob_bot(2).png')
+
 stand = create_sprite(list_mob_stand, timer=15)
 go_left = create_sprite(list_mob_go_left, timer=5)
 go_right = create_sprite(list_mob_go_right, timer=5)
+bot = create_sprite(list_player_bot, timer=15)
 
-TEST_MOB = {'stand': stand, 'go_left': go_left, 'go_right': go_right}
+TEST_MOB = {'stand': stand, 'go_left': go_left, 'go_right': go_right, 'bot': bot}
 
 list_creature_stand = []
 list_creature_stand.append('test_creature(1).png')
