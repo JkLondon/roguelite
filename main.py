@@ -72,8 +72,6 @@ class Game:
             self.clock.tick(self.FPS)
             for event in pg.event.get():
                 # check for closing window
-                if event.type == pg.QUIT:
-                    running = False
                 self.event_processor(event, self.dict_of_objects['player'].mob)
             self.dict_of_objects['creature'].mob.behavior(self.dict_of_objects['player'].mob)
             self.dict_of_objects['player'].mob.lvl = self.score // 10 + 1
@@ -89,6 +87,10 @@ class Game:
         event_processor
         don't react on any keys when bot.
         """
+        if event.type == pg.QUIT:
+            running = False
+            exit()
+        
         if not self.alive:
             if event.type == pg.KEYDOWN:
                 self.clear_list()
