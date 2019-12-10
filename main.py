@@ -5,6 +5,8 @@ import lib_sprites
 import Player as Pl
 import Animation as A
 import Creature as C
+import NPC
+import DialogWindow as Dw
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -24,7 +26,7 @@ with open('landscape1.txt', 'r') as f:
 
 class Game:
     """Shell of game"""
-    def __init__(self):
+    def __init__(self, f):
         self.WIDTH = 800
         self.HEIGHT = 600
         self.FPS = 30
@@ -41,7 +43,7 @@ class Game:
         '''label shit'''
         self.screen_rect = self.screen.get_rect()
         self.default_font = pg.font.get_default_font()
-        self.font_renderer = pg.font.Font(self.default_font, 24)
+        self.font_renderer = pg.font.Font(self.default_font, 20)
         '''hp shit'''
         self.hp = None
         self.hp_rect = None
@@ -58,6 +60,18 @@ class Game:
         '''record shit'''
         self.record = 0
         self.record_table = self.font_renderer.render(str(self.record), True, WHITE)
+        '''dialog shit'''
+        self.current_dialog = Dw.DialogWindow()
+        self.dialog_window = self.font_renderer
+        self.dialog_window_render = self.dialog_window.render('', True, BLACK)
+        self.author_window = self.font_renderer
+        self.author_window_render = self.dialog_window.render('', True, BLACK)
+        self.dialog_image = pg.image.load('dialog.png').convert()
+        self.turn_to_talk = 0
+        self.crutches = True
+        self.creature = None
+        self.creature_animation = None
+        self.f = f
 
     def new_game(self, record):
         """
@@ -73,7 +87,8 @@ class Game:
             for event in pg.event.get():
                 # check for closing window
                 self.event_processor(event, self.dict_of_objects['player'].mob)
-            self.dict_of_objects['creature'].mob.behavior(self.dict_of_objects['player'].mob)
+            if not self.crutches:
+                self.dict_of_objects['creature'].mob.behavior(self.dict_of_objects['player'].mob)
             self.dict_of_objects['player'].mob.lvl = self.score // 10 + 1
             self.body_func()
             self.render()
@@ -97,7 +112,11 @@ class Game:
                 self.all_sprites = pg.sprite.Group()
                 self.record = max(self.record, self.score)
                 self.score = 0
+                self.set_start(f1)
                 self.new_game(self.record)
+        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1 and self.turn_to_talk < 16:
+            self.set_dialog()
+            self.turn_to_talk += 1
         if not pg.key.get_pressed()[pg.K_s]:
             if player.state == 'bot':
                 player.state = ''
@@ -146,7 +165,7 @@ class Game:
         """
         Func declared where lose table is
         """
-        self.lose = self.font_renderer.render("Вы проиграли, для продолжения нажмите любую клавишу", True, WHITE)
+        self.lose = self.font_renderer.render("Вы даже с прокрастинацией справиться не можете", True, WHITE)
         self.lose_rect = self.lose.get_rect()
         # left on screen
         self.lose_rect.center = self.screen_rect.center
@@ -179,7 +198,20 @@ class Game:
             self.set_lose()
         self.set_score()
         self.set_record()
-
+    
+    def set_dialog(self):
+        self.author_window = self.font_renderer
+        author = ''
+        if self.turn_to_talk % 2 == 0:
+            self.current_dialog.set_phrase('human', self.turn_to_talk // 2)
+            author = 'Дед:'
+        else:
+            self.current_dialog.set_phrase('player', self.turn_to_talk // 2)
+            author = 'Физтех:'
+        self.author_window_render = self.author_window.render(author, True, BLACK)
+        self.dialog_window = self.font_renderer
+        self.dialog_window_render = self.dialog_window.render(self.current_dialog.text, True, RED)
+        
     def set_body(self, func):
         """
         Set body function.
@@ -213,11 +245,23 @@ class Game:
         self.screen.blit(self.hp, self.hp_rect)
         self.screen.blit(self.score_table, (570, 10))
         self.screen.blit(self.record_table, (570, 60))
+        if self.turn_to_talk < 16:
+            self.screen.blit(self.dialog_image, (0, 500))
+            self.screen.blit(self.author_window_render, (20, 520))
+            self.screen.blit(self.dialog_window_render, (20, 555))
+        elif self.crutches:
+            self.dict_of_objects['npc'].mob.x_vel = 5
+            self.creature = C.Creature(600, 100, self.BackGr)
+            self.creature.health = 1
+            self.creature_animation = A.Animation(self.creature, lib_sprites.TEST_CREATURE)
+            self.add_obj(self.creature_animation, 'creature')
+            self.all_sprites.add(self.dict_of_objects['creature'])
+            self.crutches = False
         self.all_sprites.draw(self.screen)
 
 
 if __name__ == '__main__':
-    BoD = Game()
+    BoD = Game(True)
 
 
     def f():
@@ -225,10 +269,21 @@ if __name__ == '__main__':
         test_mob.x_vel = 0
         test_mob_animation = A.Animation(test_mob, lib_sprites.TEST_MOB)
         BoD.add_obj(test_mob_animation, 'player')
-        test_creature = C.Creature(600, 400, BoD.BackGr)
+        test_npc = NPC.NPC(700, 375, BoD.BackGr)
+        test_npc_animation = A.Animation(test_npc, lib_sprites.TEST_NPC)
+        BoD.add_obj(test_npc_animation, 'npc')
+        BoD.alive = True
+
+    def f1():
+        test_mob = Pl.Player(400, 400, BoD.BackGr)
+        test_mob.x_vel = 0
+        test_mob_animation = A.Animation(test_mob, lib_sprites.TEST_MOB)
+        BoD.add_obj(test_mob_animation, 'player')
+        test_creature = C.Creature(600, 100, BoD.BackGr)
         test_creature.health = 1
         test_creature_animation = A.Animation(test_creature, lib_sprites.TEST_CREATURE)
         BoD.add_obj(test_creature_animation, 'creature')
+        BoD.all_sprites.add(BoD.dict_of_objects['creature'])
         BoD.alive = True
 
     BoD.set_start(f)

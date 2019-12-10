@@ -30,3 +30,11 @@ list_creature_stand.append('test_creature(2).png')
 stand = create_sprite(list_creature_stand, timer=10)
 
 TEST_CREATURE = {'stand': stand}
+
+list_npc_stand = []
+list_npc_stand.append('test_npc_stand(1).png')
+list_npc_stand.append('test_npc_stand(2).png')
+
+stand = create_sprite(list_npc_stand, timer=10)
+
+TEST_NPC = {'stand': stand}
