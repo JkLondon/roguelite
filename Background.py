@@ -15,6 +15,7 @@ with open('landscape1.txt', 'r') as f:
 
 GROUNDCOLOR_1 = (6, 131 + 5, 158 + 5)
 GROUNDCOLOR_2 = (255, 255, 255)
+DOORCOLOR = (200, 60, 30) 
 
 
 class Ground():
@@ -28,7 +29,7 @@ class Ground():
         self.width = len(self.array[0])
         self.height = len(self.array)
         self.size = 20
-        self.color = get_color()
+        self.color = get_color(1)
         self.screen = screen
 
     def draw_ground(self):
@@ -77,8 +78,29 @@ class Ground():
         return b
 
 
-def get_color():
-    return GROUNDCOLOR_2
+class Door():
+    def __init__(self, screen):
+        self.rect = pygame.Rect(0, 0, 60, 100)
+        self.color = DOORCOLOR
+        self.screen = screen
+
+    def draw_door(self):
+        pygame.draw.rect(self.screen, self.color, self.rect)
+
+    def entering(self, other):
+        entering = False
+        if (other.x_pos >= self.rect.left and other.x_pos <= self.rect.right and
+            other.y_pos >= self.rect.top and other.y_pos <= self.rect.bottom):
+            entering = True
+        return(entering)
+
+
+
+def get_color(index):
+    if index == 1:
+        return GROUNDCOLOR_1
+    else:
+        return GROUNDCOLOR_2
 
 
 if __name__ == '__main__':
