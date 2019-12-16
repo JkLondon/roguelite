@@ -1,21 +1,18 @@
 import Mob as M
-import animations as a
+import Animation
 
 
 class Human(M.Mob):
+    def __init__(self, x, y, game):
+        super().__init__(x, y, game)
+        self.health = 10
     """
-    Большинство параметров нагло тырит у моба, сам
-    имеет пушку и уровень знаний (пока).
-    Может ботать (анимация?)
+    Template for humanoid mobs
     """
-    def __init__(self):
-        self.lvl_of_knowledge = 0
-        self.weapon = None
-
-    def bot_h(self):
-        a.bot(self)
-        pass
-
-    def cast(self):
-        a.cast(self, self.weapon)
-        pass
+    def sprite_update(self, time):
+        if self.x_vel == 0:
+            self.animation.change_sprite('stand', time)
+        if self.x_vel > 0:
+            self.animation.change_sprite('go_right', time)
+        if self.x_vel < 0:
+            self.animation.change_sprite('go_left', time)

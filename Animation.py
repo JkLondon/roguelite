@@ -13,6 +13,11 @@ class Animation(pygame.sprite.Sprite):
         self.rect.center = (self.mob.x_pos, self.mob.y_pos)
         self.mob.size_x = abs(self.rect.left - self.rect.center[0])
         self.mob.size_y = abs(self.rect.bottom - self.rect.center[1])
+        self.mob.width = self.mob.size_x * 2
+        self.mob.height = self.mob.size_y * 2
+        self.x = self.mob.x_pos - self.mob.size_x
+        self.y = self.mob.y_pos - self.mob.size_y
+        self.mob.animation = self
 
     def change_sprite(self, sprite_name, time):
         self.sprite = self.dict_of_sprites[sprite_name]
@@ -31,9 +36,17 @@ class Animation(pygame.sprite.Sprite):
         """
         Update position of picture on display.
         """
-        self.mob.update()
-        self.set_image(time)
-        self.rect.center = (self.mob.x_pos, self.mob.y_pos)
+        if self.mob.health > 0:
+            self.mob.update()
+            self.mob.sprite_update(time)
+            self.rect.center = (self.mob.x_pos, self.mob.y_pos)
+        else:
+            self.kurt_kobein()
+    
+    def kurt_kobein(self):
+        del self.mob
+        self.kill()
+    
 
 
 if __name__ == '__main__':
