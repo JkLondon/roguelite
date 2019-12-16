@@ -14,14 +14,21 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 landscape1 = []
+landscape2 = []
 
-"""Эта штука должна быть в main, но пока пусть побудет тут"""
 with open('landscape1.txt', 'r') as f:
     for i in f:
         L = i.split(' ')
         if '\n' in L:
             L.remove('\n')
         landscape1.append(list(map(int, L)))
+
+with open('landscape2.txt', 'r') as f:
+    for i in f:
+        L = i.split(' ')
+        if '\n' in L:
+            L.remove('\n')
+        landscape2.append(list(map(int, L)))
 
 
 class Game:
@@ -35,6 +42,7 @@ class Game:
         self.screen = pg.display.set_mode((self.WIDTH, self.HEIGHT))
         pg.display.set_caption("RogueLite")
         self.clock = pg.time.Clock()
+        self.state = 1
         self.time = 0
         self.score = 0
         self.dict_of_objects = dict()
@@ -53,6 +61,7 @@ class Game:
         self.lose_rect = None
         '''BackGrAdd'''
         self.BackGr = Bg.Ground(landscape1, self.screen)
+        self.Door = Bg.Door(self.screen)
         self.BGImage = pg.image.load('background_1.jpg').convert()
         '''score shit'''
         self.score_table = None
@@ -78,6 +87,7 @@ class Game:
         start new game
         """
         self.record = record
+        self.state = 1
         running = True
         self.start_func()
         for sp in self.list_of_keys:
@@ -136,6 +146,12 @@ class Game:
             if player.bot_time == -1:
                 self.time %= 100003
                 player.bot_time = self.time
+        if self.Door.entering(player):
+            if self.state == 1:
+                self.state = 2
+            else:
+                self.state = 1
+            self.state_change()
 
 
     @staticmethod
@@ -231,6 +247,21 @@ class Game:
         """
         self.dict_of_objects = dict()
         self.list_of_keys = []
+
+    def state_change(self):
+        """
+        Changes scenery, when the player enters a door.
+        """
+        if self.state == 1:
+            self.BackGr.array = landscape1
+            self.BGImage = pg.image.load('background_1.jpg').convert()
+            self.Door.rect.topleft = (100, 400)
+        else:
+            self.BackGr.array = landscape2
+            self.BGImage = pg.image.load('background_2.jpg').convert()
+            self.Door.rect.topleft = (500, 400)
+        self.BackGr.color = Bg.get_color(self.state)
+        
     
     def render(self):
         """
@@ -240,6 +271,7 @@ class Game:
             self.all_sprites.update(self.time)
         self.screen.blit(self.BGImage, (0, 0))
         self.BackGr.draw_ground()
+        self.Door.draw_door()
         if not self.alive:
             self.screen.blit(self.lose, self.lose_rect)
         self.screen.blit(self.hp, self.hp_rect)
