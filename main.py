@@ -122,7 +122,7 @@ class Game:
                 self.all_sprites = pg.sprite.Group()
                 self.record = max(self.record, self.score)
                 self.score = 0
-                self.set_start(f1)
+                self.set_start(self.other_start)
                 self.new_game(self.record)
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1 and self.turn_to_talk < 16:
             self.set_dialog()
@@ -160,6 +160,12 @@ class Game:
         Function which must be run before main cycle starts.
         """
         pass
+    
+    def other_start(self):
+        pass
+    
+    def set_other(self,func):
+        self.other_start = func
     
     def set_start(self, func):
         """
@@ -232,7 +238,7 @@ class Game:
         """
         Set body function.
         """
-        self.start_func = func
+        self.start_body = func
     
     def add_obj(self, obj, name):
         """
@@ -319,4 +325,5 @@ if __name__ == '__main__':
         BoD.alive = True
 
     BoD.set_start(f)
+    BoD.set_other(f1)
     BoD.new_game(0)
