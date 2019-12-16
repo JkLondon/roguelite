@@ -38,3 +38,13 @@ list_npc_stand.append('test_npc_stand(2).png')
 stand = create_sprite(list_npc_stand, timer=10)
 
 TEST_NPC = {'stand': stand}
+
+list_bullet = []
+list_bullet.append('bullet(1).png')
+list_bullet.append('bullet(2).png')
+list_bullet.append('bullet(3).png')
+list_bullet.append('bullet(4).png')
+
+stand = create_sprite(list_bullet, timer=5)
+
+BULLET = {'stand':stand}
