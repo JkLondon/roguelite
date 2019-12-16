@@ -3,19 +3,18 @@ import dialogs
 
 
 class Mob:
-    def __init__(self, x, y, background):
+    def __init__(self, x, y, game):
         self.size_y = 0
         self.size_x = 0
         self.health = None
         self.armor = None
-        self.attack = None
         self.animation = None
         self.x_pos = x
         self.y_pos = y
         self.x_vel = 0
         self.y_vel = 0
         '''bg const pack'''
-        self.background = background
+        self.background = game.BackGr
         self.x = self.x_pos - self.size_x
         self.y = self.y_pos - self.size_y
         self.width = self.size_x * 2

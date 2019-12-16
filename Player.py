@@ -1,19 +1,20 @@
 import Human as H
-
+import Bullet
 
 class Player(H.Human):
-    def __init__(self, x, y, background):
-        super().__init__(x, y, background)
+    def __init__(self, x, y, game):
+        super().__init__(x, y, game)
         self.lvl = 1
         self.weapon_type = None
         self.health = 20
         self.attacking = False
         self.bot_time = -1
         self.state = ''
+        self.mana = 0
+        self.game = game
 
-    def attack(self, x):
-        if self.x < x:
-            pass
+    def attack(self):
+        Bullet.cast_bullet(self.x_pos, self.y_pos, 0, -10, self.game)
 
     def sprite_update(self, time):
         if self.state == 'bot':
