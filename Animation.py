@@ -36,16 +36,16 @@ class Animation(pygame.sprite.Sprite):
         """
         Update position of picture on display.
         """
-        if self.mob.health != 0:
+        if self.mob.health > 0:
             self.mob.update()
             self.mob.sprite_update(time)
             self.rect.center = (self.mob.x_pos, self.mob.y_pos)
         else:
-            self.destruction()
+            self.kurt_kobein()
     
-    def destruction(self):
-        self.mob.destruction()
-        pass
+    def kurt_kobein(self):
+        del self.mob
+        self.kill()
     
 
 

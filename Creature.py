@@ -5,7 +5,7 @@ class Creature(M.Mob):
     def __init__(self, x, y, game):
         super().__init__(x, y, game)
         self.base_vel = 1
-        self.health = 5
+        self.health = 1
 
     def set_mob(self):
         pass

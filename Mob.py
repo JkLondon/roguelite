@@ -13,6 +13,7 @@ class Mob:
         self.y_pos = y
         self.x_vel = 0
         self.y_vel = 0
+        self.game = game
         '''bg const pack'''
         self.background = game.BackGr
         self.x = self.x_pos - self.size_x

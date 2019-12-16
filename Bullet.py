@@ -15,11 +15,23 @@ class Bullet(Mob):
         self.animation.change_sprite('stand', time)
     
     def update(self):
+        try:
+            gost = self.game.dict_of_objects['creature'].mob
+            if (abs(self.x_pos - gost.x_pos) < gost.size_x) and (abs(self.y_pos - gost.y_pos) < gost.size_y):
+                self.game.dict_of_objects['creature'].mob.health -= 1
+                self.health = 0
+        except:
+            pass
+        one, two = False, False
         if self.x_pos > - 100 and self.x_pos < self.game.WIDTH + 100:
             self.x_pos += self.x_vel
-        if self.y_pos < self.game.HEIGHT + 100:
+        else:
+            self.health = 0
+        if self.y_pos > -100 and self.y_pos < self.game.HEIGHT + 100:
             self.y_pos += self.y_vel
             self.y_vel += 0.2
+        else:
+            self.health = 0
     
     
     
