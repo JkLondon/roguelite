@@ -36,9 +36,17 @@ class Animation(pygame.sprite.Sprite):
         """
         Update position of picture on display.
         """
-        self.mob.update()
-        self.mob.sprite_update(time)
-        self.rect.center = (self.mob.x_pos, self.mob.y_pos)
+        if self.mob.health != 0:
+            self.mob.update()
+            self.mob.sprite_update(time)
+            self.rect.center = (self.mob.x_pos, self.mob.y_pos)
+        else:
+            self.destruction()
+    
+    def destruction(self):
+        self.mob.destruction()
+        pass
+    
 
 
 if __name__ == '__main__':

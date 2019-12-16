@@ -6,7 +6,7 @@ class Mob:
     def __init__(self, x, y, game):
         self.size_y = 0
         self.size_x = 0
-        self.health = None
+        self.health = 0
         self.armor = None
         self.animation = None
         self.x_pos = x

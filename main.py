@@ -128,7 +128,7 @@ class Game:
             self.set_dialog()
             self.turn_to_talk += 1
         if player.mana > 0 and event.type == pg.MOUSEBUTTONDOWN:
-            player.attack()
+            player.attack(event)
             player.mana -= 1
         if not pg.key.get_pressed()[pg.K_s]:
             if player.state == 'bot':

@@ -6,6 +6,7 @@ import lib_sprites
 class Bullet(Mob):
     def __init__(self, x, y, x_vel, y_vel, game):
         super().__init__(x, y, game)
+        self.health = 1
         self.x_vel = x_vel
         self.y_vel = y_vel
         self.game = game
