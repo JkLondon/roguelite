@@ -3,27 +3,17 @@ import pygame
 FPS = 60
 W = 800  # ширина экрана
 H = 600  # высота экрана
-landscape1 = []
-
-"""Эта штука должна быть в main, но пока пусть побудет тут"""
-with open('landscape1.txt', 'r') as f:
-    for i in f:
-        L = i.split(' ')
-        if '\n' in L:
-            L.remove('\n')
-        landscape1.append(list(map(int, L)))
 
 GROUNDCOLOR_1 = (6, 131 + 5, 158 + 5)
 GROUNDCOLOR_2 = (255, 255, 255)
-DOORCOLOR = (200, 60, 30) 
+DOORCOLOR = (200, 60, 30)
 
 
 class Ground():
     def __init__(self, array, screen):
         """
-        self.array - двумерный список из нулей и единиц;
-        точки с координатами (i*self.size, j*self.size) - левые верхние
-        углы квадратов
+        self.array - two-dimention array of zeros and ones;
+        points with coords (i*self.size, j*self.size) - left up angels of squares
         """
         self.array = array
         self.width = len(self.array[0])

@@ -7,6 +7,7 @@ import Animation as A
 import Creature as C
 import NPC
 import DialogWindow as Dw
+from random import randrange
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -98,7 +99,15 @@ class Game:
                 # check for closing window
                 self.event_processor(event, self.dict_of_objects['player'].mob)
             if not self.crutches:
-                self.dict_of_objects['creature'].mob.behavior(self.dict_of_objects['player'].mob)
+                try:
+                    self.dict_of_objects['creature'].mob.behavior(self.dict_of_objects['player'].mob)
+                except:
+                    self.score += 1
+                    test_creature = C.Creature(randrange(100,600,4), 100, BoD)
+                    test_creature_animation = A.Animation(test_creature, lib_sprites.TEST_CREATURE)
+                    BoD.add_obj(test_creature_animation, 'creature')
+                    BoD.all_sprites.add(BoD.dict_of_objects['creature'])
+                    
             self.dict_of_objects['player'].mob.lvl = self.score // 10 + 1
             self.body_func()
             self.render()
@@ -133,7 +142,6 @@ class Game:
         if not pg.key.get_pressed()[pg.K_s]:
             if player.state == 'bot':
                 player.state = ''
-                self.score += (self.time - player.bot_time) // self.FPS
                 player.mana += (self.time - player.bot_time) // self.FPS
                 player.bot_time = -1
             if pg.key.get_pressed()[pg.K_a]:
@@ -330,7 +338,6 @@ if __name__ == '__main__':
         test_mob_animation = A.Animation(test_mob, lib_sprites.TEST_MOB)
         BoD.add_obj(test_mob_animation, 'player')
         test_creature = C.Creature(600, 100, BoD)
-        test_creature.health = 1
         test_creature_animation = A.Animation(test_creature, lib_sprites.TEST_CREATURE)
         BoD.add_obj(test_creature_animation, 'creature')
         BoD.all_sprites.add(BoD.dict_of_objects['creature'])
