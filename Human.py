@@ -3,6 +3,9 @@ import Animation
 
 
 class Human(M.Mob):
+    def __init__(self, x, y, game):
+        super().__init__(x, y, game)
+        self.health = 10
     """
     Template for humanoid mobs
     """

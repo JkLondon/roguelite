@@ -122,15 +122,19 @@ class Game:
                 self.all_sprites = pg.sprite.Group()
                 self.record = max(self.record, self.score)
                 self.score = 0
-                self.set_start(f1)
+                self.set_start(self.other_start)
                 self.new_game(self.record)
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1 and self.turn_to_talk < 16:
             self.set_dialog()
             self.turn_to_talk += 1
+        if player.mana > 0 and event.type == pg.MOUSEBUTTONDOWN:
+            player.attack(event)
+            player.mana -= 1
         if not pg.key.get_pressed()[pg.K_s]:
             if player.state == 'bot':
                 player.state = ''
                 self.score += (self.time - player.bot_time) // self.FPS
+                player.mana += (self.time - player.bot_time) // self.FPS
                 player.bot_time = -1
             if pg.key.get_pressed()[pg.K_a]:
                 player.x_vel = -5
@@ -160,6 +164,12 @@ class Game:
         Function which must be run before main cycle starts.
         """
         pass
+    
+    def other_start(self):
+        pass
+    
+    def set_other(self,func):
+        self.other_start = func
     
     def set_start(self, func):
         """
@@ -232,14 +242,22 @@ class Game:
         """
         Set body function.
         """
-        self.start_func = func
+        self.start_body = func
     
     def add_obj(self, obj, name):
+        """
+        Add object in list of active objects.
+        """
+        self.dict_of_objects[name] = obj
+        self.list_of_keys.append(name)
+    
+    def add_new_obj(self, obj, name):
         """
         Add new object in list of active objects.
         """
         self.dict_of_objects[name] = obj
         self.list_of_keys.append(name)
+        self.all_sprites.add(obj)
     
     def clear_list(self):
         """
@@ -283,7 +301,7 @@ class Game:
             self.screen.blit(self.dialog_window_render, (20, 555))
         elif self.crutches:
             self.dict_of_objects['npc'].mob.x_vel = 5
-            self.creature = C.Creature(600, 100, self.BackGr)
+            self.creature = C.Creature(600, 100, self)
             self.creature.health = 1
             self.creature_animation = A.Animation(self.creature, lib_sprites.TEST_CREATURE)
             self.add_obj(self.creature_animation, 'creature')
@@ -297,21 +315,21 @@ if __name__ == '__main__':
 
 
     def f():
-        test_mob = Pl.Player(400, 400, BoD.BackGr)
+        test_mob = Pl.Player(400, 400, BoD)
         test_mob.x_vel = 0
         test_mob_animation = A.Animation(test_mob, lib_sprites.TEST_MOB)
         BoD.add_obj(test_mob_animation, 'player')
-        test_npc = NPC.NPC(700, 375, BoD.BackGr)
+        test_npc = NPC.NPC(700, 375, BoD)
         test_npc_animation = A.Animation(test_npc, lib_sprites.TEST_NPC)
         BoD.add_obj(test_npc_animation, 'npc')
         BoD.alive = True
 
     def f1():
-        test_mob = Pl.Player(400, 400, BoD.BackGr)
+        test_mob = Pl.Player(400, 400, BoD)
         test_mob.x_vel = 0
         test_mob_animation = A.Animation(test_mob, lib_sprites.TEST_MOB)
         BoD.add_obj(test_mob_animation, 'player')
-        test_creature = C.Creature(600, 100, BoD.BackGr)
+        test_creature = C.Creature(600, 100, BoD)
         test_creature.health = 1
         test_creature_animation = A.Animation(test_creature, lib_sprites.TEST_CREATURE)
         BoD.add_obj(test_creature_animation, 'creature')
@@ -319,4 +337,5 @@ if __name__ == '__main__':
         BoD.alive = True
 
     BoD.set_start(f)
+    BoD.set_other(f1)
     BoD.new_game(0)
