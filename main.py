@@ -82,6 +82,11 @@ class Game:
         self.creature = None
         self.creature_animation = None
         self.f = f
+        '''music shit'''
+        pg.mixer.init()
+        pg.mixer.music.load('ost_from_novel.mp3')
+        pg.mixer.music.set_volume(0.25)
+        pg.mixer.music.play(-1)
 
     def new_game(self, record):
         """
@@ -327,7 +332,7 @@ if __name__ == '__main__':
         test_mob.x_vel = 0
         test_mob_animation = A.Animation(test_mob, lib_sprites.TEST_MOB)
         BoD.add_obj(test_mob_animation, 'player')
-        test_npc = NPC.NPC(700, 375, BoD)
+        test_npc = NPC.NPC(700, 430, BoD)
         test_npc_animation = A.Animation(test_npc, lib_sprites.TEST_NPC)
         BoD.add_obj(test_npc_animation, 'npc')
         BoD.alive = True
