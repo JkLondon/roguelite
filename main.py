@@ -103,7 +103,7 @@ class Game:
                     self.dict_of_objects['creature'].mob.behavior(self.dict_of_objects['player'].mob)
                 except:
                     self.score += 1
-                    test_creature = C.Creature(randrange(100,600,4), 100, BoD)
+                    test_creature = C.Creature(randrange(100, 600, 4), 100, BoD)
                     test_creature_animation = A.Animation(test_creature, lib_sprites.TEST_CREATURE)
                     BoD.add_obj(test_creature_animation, 'creature')
                     BoD.all_sprites.add(BoD.dict_of_objects['creature'])
@@ -176,7 +176,7 @@ class Game:
     def other_start(self):
         pass
     
-    def set_other(self,func):
+    def set_other(self, func):
         self.other_start = func
     
     def set_start(self, func):
@@ -281,11 +281,11 @@ class Game:
         if self.state == 1:
             self.BackGr.array = landscape1
             self.BGImage = pg.image.load('background_1.jpg').convert()
-            self.Door.rect.topleft = (100, 400)
+            self.Door.rect.topleft = (20, 320)
         else:
             self.BackGr.array = landscape2
             self.BGImage = pg.image.load('background_2.jpg').convert()
-            self.Door.rect.topleft = (500, 400)
+            self.Door.rect.topleft = (720, 380)
         self.BackGr.color = Bg.get_color(self.state)
         
     

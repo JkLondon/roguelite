@@ -70,7 +70,7 @@ class Ground():
 
 class Door():
     def __init__(self, screen):
-        self.rect = pygame.Rect(0, 0, 60, 100)
+        self.rect = pygame.Rect(20, 320, 60, 100)
         self.color = DOORCOLOR
         self.screen = screen
 
