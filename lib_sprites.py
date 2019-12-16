@@ -5,9 +5,13 @@ def create_sprite(list, timer):
 list_mob_stand = []
 list_mob_stand.append('test_mob_stand(1).png')
 list_mob_stand.append('test_mob_stand(2).png')
+list_mob_stand.append('test_mob_stand(3).png')
+list_mob_stand.append('test_mob_stand(4).png')
 list_mob_stand_bot = []
 list_mob_stand_bot.append('test_mob_stand_bot(1).png')
 list_mob_stand_bot.append('test_mob_stand_bot(2).png')
+list_mob_stand_bot.append('test_mob_stand_bot(3).png')
+list_mob_stand_bot.append('test_mob_stand_bot(4).png')
 list_mob_go_left = []
 list_mob_go_left.append('test_mob_go_left(1).png')
 list_mob_go_left.append('test_mob_go_left(2).png')
